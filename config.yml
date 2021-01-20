@@ -1,0 +1,26 @@
+# Whether edit mode should be auto-enabled anytime someone who has permission to use it logs in.
+auto-enable: false
+# Block colon commands (makes blacklist easier to control)
+# Don't forget you can use the command-block-overrides in the server commands.yml
+# if you want command blocks to always use /minecraft:tp instead of /tp or similar.
+# A whitelist can bypass this option if it contains colon commands.
+block-colon-commands: false
+# Block tab complete while in edit mode. It's not recommended to enable this when auto-enable is also on.
+block-tab-complete: false
+# Whether the command list should be a whitelist (if false, is a blacklist)
+# Using a whitelist is recommended, you can always miss things with a blacklist.
+whitelist: true
+# Command whitelist or blacklist. Do not prefix any of these with a / unless you are referring to a
+# double-slash command like //example. In that case simply add one slash like /example.
+commands:
+- say
+- me
+- minecraft:me
+# Whether the blacklist bypass permission should be enabled, in case
+# users of the plugin are able to modify permissions.
+# OPs will always bypass this plugin and its restrictions.
+enable-bypass: false
+# Block that turns into a command block when placed while in edit mode
+# See for values: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html
+# Set to DISABLE to disable this feature. Non-OPs will not be able to place command blocks.
+command-substitute: DISABLE

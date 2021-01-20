@@ -1,0 +1,19 @@
+name: CommandBlockPermissions
+version: 1.3
+author: Datatags
+main: me.Datatags.CommandBlockPermissions.CommandBlockPermissions
+api-version: 1.13
+depend: [ProtocolLib]
+commands:
+    editcommandblock:
+        description: Allows editing of command blocks without OP
+        aliases: [ecb]
+        permission: commandblockpermissions.use
+permissions:
+    commandblockpermissions.use:
+        description: Allows use of command blocks without being an OP
+        children:
+            minecraft.commandblock: true
+    commandblockpermissions.bypass:
+        description: Allows use of blacklisted or non-whitelisted commands
+        default: false
