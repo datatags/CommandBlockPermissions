@@ -22,6 +22,9 @@ public class CommandBlockListener extends PacketAdapter {
 			return;
 		}
 		String fullCommand = e.getPacket().getStrings().read(0);
+		if (fullCommand.trim().equals("")) {
+			return; // I don't see any reason why blanking a command block shouldn't be allowed
+		}
 		String commandName = fullCommand.split(" ")[0];
 		if (commandName.startsWith("/")) {
 			commandName = commandName.substring(1); // remove slash if there is one
