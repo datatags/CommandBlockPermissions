@@ -9,7 +9,6 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -21,7 +20,6 @@ import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import com.comphenix.protocol.events.PacketContainer;
-import com.comphenix.protocol.wrappers.EnumWrappers.NativeGameMode;
 
 public class CommandBlockPermissions extends JavaPlugin implements CommandExecutor {
 	public static final Permission USE_PERMISSION = new Permission("commandblockpermissions.use");
@@ -54,12 +52,6 @@ public class CommandBlockPermissions extends JavaPlugin implements CommandExecut
 			return false;
 		}
 		enabledPlayers.add(player.getUniqueId());
-		if (player.getGameMode() != GameMode.CREATIVE) {
-			if (!sendCreativePacket(player)) {
-				enabledPlayers.remove(player.getUniqueId());
-				return false;
-			}
-		}
 		if (getConfig().getBoolean("block-tab-complete")) {
 			try {
 				pm.sendServerPacket(player, noCommandsPacket);
@@ -137,20 +129,6 @@ public class CommandBlockPermissions extends JavaPlugin implements CommandExecut
 			pm.sendServerPacket(player, opPacket);
 		} catch (InvocationTargetException ex) {
 			getLogger().warning("Failed to send fake op packet to player:");
-			ex.printStackTrace();
-			return false;
-		}
-		return true;
-	}
-	private boolean sendCreativePacket(Player player) {
-		PacketContainer gamemodePacket = pm.createPacket(PacketType.Play.Server.GAME_STATE_CHANGE);
-		//gamemodePacket.getIntegers().write(0, 3); // 3 is gamemode change
-		gamemodePacket.getBytes().write(0, (byte)3);
-		gamemodePacket.getGameModes().write(0, NativeGameMode.CREATIVE);
-		try {
-			pm.sendServerPacket(player, gamemodePacket);
-		} catch (InvocationTargetException ex) {
-			getLogger().warning("Failed to send fake gamemode packet to player:");
 			ex.printStackTrace();
 			return false;
 		}
